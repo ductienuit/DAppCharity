@@ -124,4 +124,10 @@ function onClick9() {
 
 function checkOut(){
 	console.log(getCartSummary());
+	$('#modalCartView').modal('show');
+}
+function addAllCheckOut(){
+	checkOut();
+	var allElementDiv = document.getElementById("cartList").querySelectorAll("div");
+	document.getElementById("cartView").appendChild(allElementDiv);	
 }
