@@ -1,5 +1,4 @@
-pragma solidity ^0.4.23;
-
+pragma solidity 0.4.24;
 
 contract Events{
     
@@ -13,9 +12,9 @@ contract Events{
     string Description;
     address public admin;
     
-    constructor() public{
-  		admin = msg.sender;
-  	}
+    constructor() public {
+        admin = msg.sender;
+    }
     
     modifier ifAdmin{
         require(msg.sender==admin);
@@ -24,52 +23,54 @@ contract Events{
     
    // Events[] public arrayEvents;
     
-    function createEvents(uint256 idevent,string name,string dateopen,string dateclose,
-                    uint256 totalmoneymin, string location, string receiver, string description) ifAdmin payable{
-                        idEvent=idevent;
-                        nameEvent=name;
-                        dateOpen=dateopen;
-                        dateClose=dateclose;
-                        totalMoneyMin=totalmoneymin;
-                        Location=location;
-                        Receiver=receiver;
-                        Description=description;
+    function createEvents(
+        uint256 idevent,string name,string dateopen,string dateclose,
+        uint256 totalmoneymin, string location, string receiver, string description) public ifAdmin payable {
+        idEvent = idevent;
+        nameEvent = name;
+        dateOpen = dateopen;
+        dateClose = dateclose;
+        totalMoneyMin = totalmoneymin;
+        Location = location;
+        Receiver = receiver;
+        Description = description;
     }
     
     
-    function getidEvent()constant returns(uint256){
+    function getidEvent() public view returns(uint256){
         return idEvent;
     }
     
-    function getNameEvent()constant returns(string){
+    function getNameEvent() public view returns(string){
         return nameEvent;
     }
     
-    function getdateOpent()constant returns(string){
+    function getdateOpent() public view returns(string){
         return dateClose;
     }
     
-    function getdateClose()constant returns(string){
+    function getdateClose() public view returns(string){
         return dateClose;
     }
     
-    function gettotalmoney()constant returns(uint256){
+    function gettotalmoney() public view returns(uint256){
         return totalMoneyMin;
     }
     
-    function getlocation()constant returns(string){
+    function getlocation() public view returns(string){
         return Location;
     }
     
-    function getReceiver()constant returns(string){
+    function getReceiver() public view returns(string){
         return Receiver;
     }
     
-    function getDescription()constant returns(string){
+    function getDescription() public view returns(string) {
         return Description;
     }
     
 }
+
 
 contract Charity {
     
@@ -98,9 +99,9 @@ contract Charity {
     Events[] public arrayEvents;
     Events ev=new Events();
     
-        constructor() public{
-  		admin = msg.sender;
-  	}
+    constructor() public {
+        admin = msg.sender; 
+    }
     
     modifier ifAdmin{
         require(msg.sender==admin);
@@ -108,53 +109,53 @@ contract Charity {
     }
     
     function createEvents(uint256 idevent,string name,string dateopen,string dateclose, uint256 totalmoneymin, 
-                                string location, string receiver, string description)ifAdmin public {
-        ev.createEvents( idevent, name, dateopen, dateclose,  totalmoneymin, location,  receiver, description);
+        string location, string receiver, string description) public ifAdmin {
+        ev.createEvents(idevent, name, dateopen, dateclose,  totalmoneymin, location,  receiver, description);
         arrayEvents.push(ev);
     }
     
-    function getnameEvent(uint256 idevent)constant returns(string){
-        for(uint256 i=0;i<arrayEvents.length;i++){
+    function getnameEvent(uint256 idevent)public view returns(string){
+        for(uint256 i = 0; i < arrayEvents.length; i++) {
             if(idevent==arrayEvents[i].getidEvent()){
                 return arrayEvents[i].getNameEvent();
             }
-        }        
+        }
     }
     
-    function getdateopent(uint256 idevent)constant returns(string){
-        for(uint256 i=0;i<arrayEvents.length;i++){
+    function getdateopent(uint256 idevent)public view returns(string){
+        for(uint256 i = 0; i < arrayEvents.length; i++) {
             if(idevent==arrayEvents[i].getidEvent()){
                 return arrayEvents[i].getdateOpent();
             }
         }        
     }
     
-    function getdateclose(uint256 idevent)constant returns(string){
+    function getdateclose(uint256 idevent)public view returns(string){
         for(uint256 i=0;i<arrayEvents.length;i++){
             if(idevent==arrayEvents[i].getidEvent()){
                 return arrayEvents[i].getdateClose();
             }
-        }    
+        }
     }
     
-    function gettotalMoney(uint256 idevent) constant returns(uint256){
+    function gettotalMoney(uint256 idevent) public view returns(uint256){
         for(uint256 i=0;i<arrayEvents.length;i++){
             if(idevent==arrayEvents[i].getidEvent()){
                 return arrayEvents[i].gettotalmoney();
             }
-        }    
+        }
     }
     
-    function getreceiver(uint256 idevent) constant returns(string){
-        for(uint256 i=0;i<arrayEvents.length;i++){
+    function getreceiver(uint256 idevent) public view returns(string){
+        for(uint256 i = 0; i < arrayEvents.length; i++) {
             if(idevent==arrayEvents[i].getidEvent()){
                 return arrayEvents[i].getReceiver();
             }
         }
     }
     
-    function addGiveth(uint256 id, string name, string location,uint256 idevent ,uint256 money, bool incognito, string desc)public{
-        Giveth memory newGiveth=Giveth({
+    function addGiveth(uint256 id, string name, string location,uint256 idevent, uint256 money, bool incognito, string desc) public {
+        Giveth memory newGiveth = Giveth({
             idGiveth:id,
             name:name,
             location:location,
@@ -166,8 +167,8 @@ contract Charity {
         arrayGiveth.push(newGiveth);
     }
     
-    function addReceiver(uint256 id,string name, uint256 money, string desc)ifAdmin public{
-        Receiver memory newreceiver=Receiver({
+    function addReceiver(uint256 id,string name, uint256 money, string desc)public ifAdmin {
+        Receiver memory newreceiver = Receiver({
             idReceiver:id,
             name:name,
             totalMoneyReceived:money,
@@ -176,72 +177,72 @@ contract Charity {
         arrayReceiver.push(newreceiver);
     }
     //get giveth
-    function getNameGiveth(uint256 id) constant returns(string){
-        for(uint256 i=0;i<arrayGiveth.length;i++){
+    function getNameGiveth(uint256 id) public view returns(string){
+        for(uint256 i = 0; i < arrayGiveth.length; i++){
             if(id==arrayGiveth[i].idGiveth){
                 return arrayGiveth[i].name;
             }
         }
     }
     
-    function getLocationGiveth(uint256 id) constant returns(string){
-         for(uint256 i=0;i<arrayGiveth.length;i++){
+    function getLocationGiveth(uint256 id) public view returns(string){
+        for(uint256 i = 0; i < arrayGiveth.length; i++){
             if(id==arrayGiveth[i].idGiveth){
                 return arrayGiveth[i].location;
             }
         }
     }
     
-    function getIdEvent(uint256 id)constant returns(uint256){
-         for(uint256 i=0;i<arrayGiveth.length;i++){
+    function getIdEvent(uint256 id)public view returns(uint256){
+        for(uint256 i = 0; i < arrayGiveth.length; i++){
             if(id==arrayGiveth[i].idGiveth){
                 return arrayGiveth[i].idEvent;
             }
         }
     }
     
-    function getTotalMoneyGiveth(uint256 id)constant returns(uint256){
-         for(uint256 i=0;i<arrayGiveth.length;i++){
+    function getTotalMoneyGiveth(uint256 id)public view returns(uint256){
+        for(uint256 i=0;i<arrayGiveth.length;i++){
             if(id==arrayGiveth[i].idGiveth){
                 return arrayGiveth[i].totalMoneygive;
             }
         }
     }
     
-    function getincognito(uint256 id)constant returns(bool){
-         for(uint256 i=0;i<arrayGiveth.length;i++){
+    function getincognito(uint256 id)public view returns(bool){
+        for(uint256 i=0;i<arrayGiveth.length;i++){
             if(id==arrayGiveth[i].idGiveth){
                 return arrayGiveth[i].incognito;
             }
         }
     }
     
-   function getDescriptionGiveth(uint256 id)constant returns(string){
-         for(uint256 i=0;i<arrayGiveth.length;i++){
+    function getDescriptionGiveth(uint256 id)public view returns(string){
+        for(uint256 i = 0; i < arrayGiveth.length; i++){
             if(id==arrayGiveth[i].idGiveth){
                 return arrayGiveth[i].Description;
             }
         }
     } 
     //get receiver
-    function getnameReceiver(uint256 id)constant returns(string){
-        for(uint256 i=0;i<arrayReceiver.length;i++){
+    function getnameReceiver(uint256 id)public view returns(string){
+        for(uint256 i = 0; i < arrayReceiver.length; i++){
             if(id==arrayReceiver[i].idReceiver){
                 return arrayReceiver[i].name;
             }
         }
     }
     
-    function gettotalMoneyReceived(uint256 id)constant returns(uint256){
-        for(uint256 i=0;i<arrayReceiver.length;i++){
+    function gettotalMoneyReceived(uint256 id)public view returns(uint256){
+        for(uint256 i = 0; i < arrayReceiver.length; i++){
             if(id==arrayReceiver[i].idReceiver){
                 return arrayReceiver[i].totalMoneyReceived;
             }
         }
     }
     
-    function getDescriptionReceived(uint256 id)constant returns(string){
-        for(uint256 i=0;i<arrayReceiver.length;i++){
+    function getDescriptionReceived(uint256 id)public view returns(string){
+        for(uint256 i = 0; i < arrayReceiver.length; i++) {
             if(id==arrayReceiver[i].idReceiver){
                 return arrayReceiver[i].Description;
             }
