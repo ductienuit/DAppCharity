@@ -74,16 +74,17 @@
 										<div class="qty">0</div>
 									</a>
 									<div class="cart-dropdown">
-										<div class="cart-list">
+										<div class="cart-list" id="cartList">
 											<div class="product-widget">
 												<div class="product-img">
 													<img src="./img/product01.png" alt="">
 												</div>
 												<div class="product-body">
 													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+													<h4 class="product-price"><span class="qty">1x</span>0.004</h4>
+													<h4 >ETH</h4>
 												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
+												<button class="delete" ><i class="fa fa-close"></i></button>
 											</div>
 
 											<div class="product-widget">
@@ -92,18 +93,18 @@
 												</div>
 												<div class="product-body">
 													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+													<h4 class="product-price"><span class="qty">1x</span>0.005</h4>
+													<h4 >ETH</h4>
 												</div>
 												<button class="delete"><i class="fa fa-close"></i></button>
 											</div>
 										</div>
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
+											<h5 id="cartSummary">SUBTOTAL: 0.009ETH</h5>
 										</div>
 										<div class="cart-btns">
 											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a href="#" onclick="checkOut()">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -150,9 +151,9 @@
 										</div>
 									</div>
 									<div class="product-body">
-										<p class="product-category">Spring/Purified</p>
+										<p id ="demo" class="product-category">Spring/Purified</p>
 										<h3 class="product-name"><a href="#">Aquafina Purified Water, Plastic Bottles</a></h3>
-										<h4 class="product-price">0.004484ETH </h4>
+										<h4 class="product-price">0.004ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -162,7 +163,8 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick1()">
+											<i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -180,7 +182,7 @@
 									<div class="product-body">
 										<p class="product-category">Seafood</p>
 										<h3 class="product-name"><a href="#">ARoyal Dorade, Farm-Raised</a></h3>
-										<h4 class="product-price">0.005124ETH </h4>
+										<h4 class="product-price">0.005ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -190,7 +192,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick2()"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -207,7 +209,7 @@
 									<div class="product-body">
 										<p class="product-category">Fresh Fruit and Veggies</p>
 										<h3 class="product-name"><a href="#">Yellow Bananas</a></h3>
-										<h4 class="product-price">0.002124ETH </h4>
+										<h4 class="product-price">0.002ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -217,7 +219,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick3()"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -234,7 +236,7 @@
 									<div class="product-body">
 										<p class="product-category">Multi-Grain & Wheat</p>
 										<h3 class="product-name"><a href="#">FreshDirect Frozen Sliced Multigrain Pullman Loaf</a></h3>
-										<h4 class="product-price">0.007124ETH </h4>
+										<h4 class="product-price">0.007ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -244,7 +246,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick4()"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -261,7 +263,7 @@
 									<div class="product-body">
 										<p class="product-category">White</p>
 										<h3 class="product-name"><a href="#">Just FreshDirect All-Natural White Bread</a></h3>
-										<h4 class="product-price">0.005324ETH </h4>
+										<h4 class="product-price">0.005ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -271,7 +273,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick5()"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -286,7 +288,7 @@
 									<div class="product-body">
 										<p class="product-category">Bok Choy</p>
 										<h3 class="product-name"><a href="#">Bok Choy</a></h3>
-										<h4 class="product-price">0.002314ETH </h4>
+										<h4 class="product-price">0.002ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -296,7 +298,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick6()"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -313,7 +315,7 @@
 									<div class="product-body">
 										<p class="product-category">Beef, Pork, & Lamb</p>
 										<h3 class="product-name"><a href="#">Just FreshDirect Thin-Crust Pepperoni Pizza, Frozen</a></h3>
-										<h4 class="product-price">0.009214ETH </h4>
+										<h4 class="product-price">0.009ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -323,7 +325,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick7()"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -339,7 +341,7 @@
 									<div class="product-body">
 										<p class="product-category">Sale</p>
 										<h3 class="product-name"><a href="#">Blue Marble Organic Ice Cream, Cookies and Cream</a></h3>
-										<h4 class="product-price">0.004214ETH </h4>
+										<h4 class="product-price">0.004ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -349,7 +351,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick8()"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -366,7 +368,7 @@
 									<div class="product-body">
 										<p class="product-category">Great Right Now Fish</p>
 										<h3 class="product-name"><a href="#">All-Natural Wild Domestic Gulf Shrimp, Shell-On, 26-30/lb</a></h3>
-										<h4 class="product-price">0.006234ETH </h4>
+										<h4 class="product-price">0.006ETH </h4>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -376,7 +378,7 @@
 										</div>
 									</div>
 									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<button class="add-to-cart-btn" onclick="onClick9()"><i class="fa fa-shopping-cart"></i> add to cart</button>
 									</div>
 								</div>
 							</div>
@@ -417,6 +419,6 @@
 		<script src="js/nouislider.min.js"></script>
 		<script src="js/jquery.zoom.min.js"></script>
 		<script src="js/main.js"></script>
-
+		<script src="js/onClick.js"></script>
 	</body>
 </html>
