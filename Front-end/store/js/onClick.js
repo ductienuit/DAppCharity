@@ -9,7 +9,16 @@ function calculateSummary(deal){
 	var value2 = getCartSummary();
 	value2 =value2 + deal;
 	console.log(value2);
+	var element = document.getElementById("cartList").childNodes;
+	var count =0;
+	for (var i = element.length - 1; i >= 0; i--) {
+		if(element[i].className == "product-widget")
+		{
+			count+=1;
+		}
+	}
 
+	document.getElementById("countItems").innerHTML = count;
 	document.getElementById("cartSummary").innerHTML="SUBTOTAL: "+value2.toString()+"ETH";
 }
 
@@ -128,6 +137,12 @@ function checkOut(){
 }
 function addAllCheckOut(){
 	checkOut();
-	var allElementDiv = document.getElementById("cartList").querySelectorAll("div");
-	document.getElementById("cartView").appendChild(allElementDiv);	
+
+
+	var allElementDiv = document.getElementById("cartList");
+	var temp = allElementDiv.cloneNode(true);
+	document.getElementById("cartView").appendChild(temp);	
+}
+function barcodeEnable(){
+	$('#livestream_scanner').modal('show');
 }

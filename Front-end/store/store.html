@@ -191,7 +191,7 @@ $(function() {
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div class="qty">0</div>
+										<div class="qty" id="countItems">2</div>
 									</a>
 									<div class="cart-dropdown">
 										<div class="cart-list" id="cartList">
@@ -540,11 +540,13 @@ $(function() {
 <!-- Cart -->
 
 								<!-- /Cart -->
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">BarCode</button>
-	      </div>
 	    </div>
+	    <div class="modal-footer">
+	    	<input id="scanner_input" class="form-control" placeholder="Private code" type="text" />
+	    	<h3> </h3>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onclick="barcodeEnable()">BarCode</button>
+	      </div>
 	  </div>
 	</div>
 	<!-- Modal -->
