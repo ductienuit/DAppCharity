@@ -141,8 +141,10 @@ function addAllCheckOut(){
 
 	var allElementDiv = document.getElementById("cartList");
 	var temp = allElementDiv.cloneNode(true);
+	document.getElementById("cartView").innerHTML = "";
 	document.getElementById("cartView").appendChild(temp);	
 }
 function barcodeEnable(){
+	var element = document.getElementById("confirmButton");
 	$('#livestream_scanner').modal('show');
 }

@@ -131,7 +131,13 @@ $(function() {
 		if (result.codeResult.code){
 			$('#scanner_input').val(result.codeResult.code);
 			Quagga.stop();	
-			setTimeout(function(){ $('#livestream_scanner').modal('hide'); }, 500);			
+			//setTimeout(function(){
+			 $('#livestream_scanner').modal('hide'); 
+			 //}, 500);
+			setTimeout(function(){ $('#modalCartView').modal('hide'); }, 500);
+			
+			setTimeout(function(){
+			 alert("Transaction complete"); }, 500);
 		}
 	});
     
@@ -539,13 +545,13 @@ $(function() {
 	      <div class="modal-body" id="cartView">
 <!-- Cart -->
 
-								<!-- /Cart -->
+<!-- /Cart -->
 	    </div>
 	    <div class="modal-footer">
 	    	<input id="scanner_input" class="form-control" placeholder="Private code" type="text" />
 	    	<h3> </h3>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" onclick="barcodeEnable()">BarCode</button>
+	        <button type="button" id= "confirmButton" class="btn btn-primary" onclick="barcodeEnable()">BarCode</button>
 	      </div>
 	  </div>
 	</div>
