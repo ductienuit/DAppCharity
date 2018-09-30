@@ -15,6 +15,7 @@ App = {
 			App.web3Provider = new
 			Web3.providers.HttpProvider('http://localhost:7545');
 			web3 = new Web3(App.web3Provider);
+			// web3.eth.defaultAccount=web3.eth.accounts[0];
 		}
 		return App.initContract();
 	},
@@ -57,32 +58,23 @@ App = {
 					eventlist.append(eventTemplate);
 				});
 			}
-			// return charityInstance.voters(App.account);
-		// }).then(function (hasVoted) {
-		// 	// Do not allow a user to vote
-		// 	if (hasVoted) {
-		// 		$('form').hide();
-		// 	}
-		// 	loader.hide();
-		// 	content.show();
 		}).catch(function (error) {
 			console.warn('err: '+ error);
 		});
 	},
-	// castVote: function () {
-	// 	var candidateId = $('#candidatesSelect').val();
-	// 	App.contracts.Election.deployed().then(function (instance) {
-	// 		return instance.vote(candidateId, {
-	// 			from: App.account
-	// 		});
-	// 	}).then(function (result) {
-	// 		// Wait for votes to update
-	// 		$("#content").hide();
-	// 		$("#loader").show();
-	// 	}).catch(function (err) {
-	// 		console.error(err);
-	// 	});
-	// }
+	donate: function() {
+		var name = $('#name').val();
+		var key = $('#key').val();
+		var idevent = 1;
+		var money = $('#money').val();
+		var note = 'asd';
+		web3.eth.sendTransaction({
+			from: key,
+			to: "0xdf2dcd8a893062b7bd64d1d1e1ef9feb117075c9",
+			value: web3.toWei(10, "ether")
+		}, console.log);
+		alert('Done');
+	}
 };
 $(function () {
 	$(window).load(function () {

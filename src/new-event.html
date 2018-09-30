@@ -35,35 +35,35 @@
         <div class="row block-9">
           <div class="col-md-12 pr-md-12">
           	<h2 class="mb-4">Create An Event</h2>
-            <form action="#">
+            <form action="#" onsubmit="App.addEvent()">
               <div class="form-group">
                 <p>EVENT TITLE</p>
-                <input type="text" class="form-control" placeholder="Give it a short distinct name">
+                <input id="name" type="text" class="form-control" placeholder="Give it a short distinct name">
               </div>
               <div class="form-group">
                 <p>LOCATION</p>
-                <input type="text" class="form-control" placeholder="Address">
+                <input id="loc" type="text" class="form-control" placeholder="Address">
               </div>
               <div class="form-group">
                 <p>GOAL</p>
-                <input type="text" class="form-control" placeholder="Ethereum">
+                <input id="goal" type="text" class="form-control" placeholder="Ethereum">
               </div>
               <div class="form-group">
                 <p>STARTS</p>
-                <input class="form-control" type="date" value="2018-09-30">
+                <input id="startDate" class="form-control" type="date" value="2018-09-30">
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <p>ENDS</p>
                 <input class="form-control" type="date" value="2018-09-30">
-              </div>
+              </div> -->
               <div class="form-group">
                 <p>EVENT IMAGE</p>
                 <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                <small id="fileHelp" class="form-text text-muted">Choose a compelling image that brings your event to life.</small>
+                <small id="" class="form-text text-muted">Choose a compelling image that brings your event to life.</small>
               </div>
               <div class="form-group">
                 <p>EVENT DESCRIPTION</p>
-                <textarea name="" id="" cols="30" rows="7" class="form-control"></textarea>
+                <textarea name="" id="des" cols="30" rows="7" class="form-control"></textarea>
               </div>
               <div class="form-group">
                 <input type="submit" value="Make Your Event" class="btn btn-primary py-3 px-5">
@@ -98,7 +98,8 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/event.js"></script>
 
     
   </body>
