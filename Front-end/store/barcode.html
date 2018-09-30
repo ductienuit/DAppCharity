@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>SCANNER PROTOTYPE TEST</title>
+	
+	<script type="text/javascript" src="./scripts/adapter.js"></script>
+	<script type="text/javascript" src="./scripts/quagga.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/5.0.4/adapter.min.js"></script>
+
+<style>
+	#interactive.viewport {position: relative; width: 100%; height: auto; overflow: hidden; text-align: center;}
+	#interactive.viewport > canvas, #interactive.viewport > video {max-width: 100%;width: 100%;}
+	canvas.drawing, canvas.drawingBuffer {position: absolute; left: 0; top: 0;}
+</style>
+<script type="text/javascript">
+$(function() {
+	// Create the QuaggaJS config object for the live stream
+	var liveStreamConfig = {
+			inputStream: {
+				type : "LiveStream",
+				constraints: {
+					width: {min: 640},
+					height: {min: 480},
+					aspectRatio: {min: 1, max: 100},
+					facingMode: "environment" // or "user" for the front camera
+				}
+			},
+			locator: {
+				patchSize: "medium",
+				halfSample: true
+			},
+			numOfWorkers: (navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 4),
+			decoder: {
+				"readers":[
+                    {"format":"ean_reader","config":{}},
+                    {"format":"code_128_reader","config":{}},
+                    {"format":"code_39_reader","config":{}},
+                    {"format":"upc_reader","config":{}},
+                    {"format":"code_93_reader","config":{}}
+				]
+			},
+			locate: true
+		};
+	// The fallback to the file API requires a different inputStream option. 
+	// The rest is the same 
+	var fileConfig = $.extend(
+			{}, 
+			liveStreamConfig,
+			{
+				inputStream: {
+					size: 800
+				}
+			}
+		);
+	// Start the live stream scanner when the modal opens
+	$('#livestream_scanner').on('shown.bs.modal', function (e) {
+		Quagga.init(
+			liveStreamConfig, 
+			function(err) {
+				if (err) {
+					$('#livestream_scanner .modal-body .error').html('<div class="alert alert-danger"><strong><i class="fa fa-exclamation-triangle"></i> '+err.name+'</strong>: '+err.message+'</div>');
+					Quagga.stop();
+					return;
+				}
+				Quagga.start();
+			}
+		);
+    });
+	
+	// Make sure, QuaggaJS draws frames an lines around possible 
+	// barcodes on the live stream
+	Quagga.onProcessed(function(result) {
+		var drawingCtx = Quagga.canvas.ctx.overlay,
+			drawingCanvas = Quagga.canvas.dom.overlay;
+ 
+		if (result) {
+			if (result.boxes) {
+				drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+				result.boxes.filter(function (box) {
+					return box !== result.box;
+				}).forEach(function (box) {
+					Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
+				});
+			}
+ 
+			if (result.box) {
+				Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
+			}
+ 
+			if (result.codeResult && result.codeResult.code) {
+				Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+			}
+		}
+	});
+	
+	// Once a barcode had been read successfully, stop quagga and 
+	// close the modal after a second to let the user notice where 
+	// the barcode had actually been found.
+	Quagga.onDetected(function(result) {    		
+		if (result.codeResult.code){
+			$('#scanner_input').val(result.codeResult.code);
+			Quagga.stop();	
+			setTimeout(function(){ $('#livestream_scanner').modal('hide'); }, 500);			
+		}
+	});
+    
+	// Stop quagga in any case, when the modal is closed
+    $('#livestream_scanner').on('hide.bs.modal', function(){
+    	if (Quagga){
+    		Quagga.stop();	
+    	}
+    });
+	
+	// Call Quagga.decodeSingle() for every file selected in the 
+	// file input
+	$("#livestream_scanner input:file").on("change", function(e) {
+		if (e.target.files && e.target.files.length) {
+			Quagga.decodeSingle($.extend({}, fileConfig, {src: URL.createObjectURL(e.target.files[0])}), function(result) {alert(result.codeResult.code);});
+		}
+	});
+});
+</script>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+    <h1>SkuFlow RT</h1>
+<div class="row">
+	<div class="col-md-4">
+        <div class="form-group">
+            <div class="input-group">
+                <input id="scanner_input" class="form-control" placeholder="Enter EAN" type="text" /> 
+                <span class="input-group-btn"> 
+                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#livestream_scanner">
+                        <i class="glyphicon glyphicon-barcode"></i>
+                    </button> 
+                </span>
+            </div><!-- /input-group -->
+        </div>
+
+        <div class="form-group">
+			<input id="qty" class="form-control" placeholder="Qty" type="text" /> 
+        </div><!-- /input-group -->   
+
+        <div class="form-group">
+            <select class="form-control">
+                <option>Condition</option>
+                <option>New</option>
+                <option>Like New</option>
+                <option>Very Good</option>
+                <option>good</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" value="option1"> Remainder
+            </label>
+        </div>
+
+        <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox1" value="option1"> Retail
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox1" value="option1"> Wholesale
+                </label>               
+            </div>
+
+        <div class="form-gorup" style="text-align:right;">
+            <button class="btn btn-primary" type="reset">
+                <i class="glyphicon glyphicon-ok"></i> Save
+            </button> 
+        </div>
+	</div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+<div class="modal" id="livestream_scanner">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Barcode Scanner</h4>
+			</div>
+			<div class="modal-body" style="position: static">
+				<div id="interactive" class="viewport"></div>
+				<div class="error"></div>
+			</div>
+			<div class="modal-footer">
+				<label class="btn btn-default pull-left">
+					<i class="fa fa-camera"></i> Use camera app
+					<input type="file" accept="image/*;capture=camera" capture="camera" class="hidden" />
+				</label>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div><!-- container -->
+</body>
+</html>
