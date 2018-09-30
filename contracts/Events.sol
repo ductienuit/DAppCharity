@@ -2,14 +2,15 @@ pragma solidity 0.4.24;
 
 contract Events{
     
-    uint256 idEvent;
-    string nameEvent;
-    string dateOpen;
-    string dateClose;
-    uint256 totalMoneyMin;
-    string Location;
-    string Receiver;
-    string Description;
+    uint256 public _idEvent;
+    string _nameEvent;
+    string _startDate;
+    string _endDate;
+    uint256 _goal;
+    string _location;
+    string _receiver;
+    string _description;
+    string _imageHash;
     address public admin;
     
     constructor() public {
@@ -24,49 +25,54 @@ contract Events{
    // Events[] public arrayEvents;
     
     function createEvents(
-        uint256 idevent,string name,string dateopen,string dateclose,
-        uint256 totalmoneymin, string location, string receiver, string description) public ifAdmin payable {
-        idEvent = idevent;
-        nameEvent = name;
-        dateOpen = dateopen;
-        dateClose = dateclose;
-        totalMoneyMin = totalmoneymin;
-        Location = location;
-        Receiver = receiver;
-        Description = description;
+        uint256 idevent,string name,string startDate,
+        uint256 goal, string location, string receiver, string description,
+        string imgHash) public ifAdmin {
+        _idEvent = idevent;
+        _nameEvent = name;
+        _startDate = startDate;
+        // _endDate = endDate;
+        _goal = goal;
+        _location = location;
+        _receiver = receiver;
+        _description = description;
+        _imageHash = imgHash;
     }
     
     
-    function getidEvent() public view returns(uint256){
-        return idEvent;
+    function getEventId() public view returns(uint256){
+        return _idEvent;
     }
     
     function getNameEvent() public view returns(string){
-        return nameEvent;
+        return _nameEvent;
     }
     
-    function getdateOpent() public view returns(string){
-        return dateClose;
+    function getStartDate() public view returns(string){
+        return _startDate;
     }
     
-    function getdateClose() public view returns(string){
-        return dateClose;
+    // function getEndDate() public view returns(string){
+    //     return _endDate;
+    // }
+    
+    function getEventGoal() public view returns(uint256){
+        return _goal;
     }
     
-    function gettotalmoney() public view returns(uint256){
-        return totalMoneyMin;
-    }
-    
-    function getlocation() public view returns(string){
-        return Location;
+    function getLocation() public view returns(string){
+        return _location;
     }
     
     function getReceiver() public view returns(string){
-        return Receiver;
+        return _receiver;
     }
     
     function getDescription() public view returns(string) {
-        return Description;
+        return _description;
     }
     
+    function getImg() public view returns (string) {
+        return _imageHash;
+    }
 }
