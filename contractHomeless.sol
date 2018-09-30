@@ -21,9 +21,12 @@ contract managerHomeless{
         idHomeless.push(_address) -1;
     } 
     
-    function excepttotalMoney(address _address,uint256 money)ifbuy public {
-        if(money<_homeLess[_address]){
+    function excepttotalMoney(address _address,uint256 money)ifbuy public returns(string){
+        if(money<=_homeLess[_address]){
             _homeLess[_address] -= money;
+            return "complete";
+        }else{
+            return  "Not enough money to make a transaction";
         }
     }
     
